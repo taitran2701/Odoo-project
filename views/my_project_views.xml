@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="my_project_form_view" model="ir.ui.view">
+            <field name="name">my.project.form.view</field>
+            <field name="model">my.project</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Lab Name" class="oe_edit_only"/>
+                            <h1><field name="Lab" placeholder="e.g. Lab 1"/></h1>
+                        </div>
+                        <group name="images">
+                            <group>
+                                <field name="Zone"/>
+                                <field name="Temperature"/>
+                            </group>                       
+                        </group>
+                        <!-- <notebook>
+                            <page name="general_information" string="General Information">
+								<group>
+									<group>
+										<field name="nickname"/>
+									</group>
+									<group>
+										<label for="description" colspan="2"/>
+										<field name="description" colspan="2" nolabel="1"/>
+									</group>
+								</group>
+							</page>
+							<page name="additional_information" string="Additional Information">
+								<group>
+									<group string="Images">
+										<field name="pet_image" string="Pet's Image" widget="image"/>
+									</group>
+									<group string="Products">
+										<field name="product_ids" widget="many2many_tags"/>
+									</group>
+								</group>
+							</page>							
+						</notebook> -->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="my_project_tree_view" model="ir.ui.view">
+            <field name="name">my.project.tree.view</field>
+            <field name="model">my.project</field>
+            <field name="arch" type="xml">
+                <tree string="Project" default_order="create_date desc">
+                    <field name="Lab"/>
+                    <field name="Zone"/>
+                    <field name="Temperature"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_my_project" model="ir.actions.act_window">
+            <field name="name">My Project</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">my.project</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('my_project_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('my_project_form_view')})]"/>
+        </record>
+
+        <menuitem id="menu_my_project"
+            name="My Project"
+            action="action_my_project"
+            sequence="10"
+            groups="base.group_user"/>
+    </data>
+</odoo>
